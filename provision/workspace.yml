@@ -2,6 +2,10 @@
 - hosts:  "{{ node_name }}"
   become: false
   tasks:
+    - name: Log Debug
+      debug:
+        msg: "Running Provisioning for default"
+        
 #    - name: Install pexpect
 #      become: true
 #      apt:
@@ -16,11 +20,11 @@
 #    - name: Setup Docker
 #      become: true
 #      import_tasks: tasks/docker.yml
-
-    - name: Setup AWS CLI
-      when: aws.enabled
-      import_tasks: tasks/aws.yml
-
+#
+#    - name: Setup AWS CLI
+#      when: aws.enabled
+#      import_tasks: tasks/aws.yml
+#
 #    - name: Setup Nodejs
 #      import_tasks: tasks/nodejs.yml
 #
