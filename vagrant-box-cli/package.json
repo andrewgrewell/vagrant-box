@@ -1,11 +1,12 @@
 {
   "name": "vagrant-box-cli",
-  "description": "Run a development environment in vagrant",
+  "description": "cli for managing vagrant development box",
   "version": "0.0.1",
   "author": "Andrew Grewell",
   "bin": {
     "vagrant-box": "./bin/run"
   },
+  "bugs": "https://github.com/andrewgrewell/vagrant-box/issues",
   "dependencies": {
     "@oclif/command": "^1",
     "@oclif/config": "^1",
@@ -18,6 +19,7 @@
     "eslint": "^5.13",
     "eslint-config-oclif": "^3.1",
     "eslint-config-oclif-typescript": "^0.1",
+    "globby": "^10",
     "ts-node": "^8",
     "typescript": "^3.3"
   },
@@ -26,19 +28,28 @@
   },
   "files": [
     "/bin",
-    "/lib"
+    "/lib",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json"
   ],
+  "homepage": "https://github.com/andrewgrewell/vagrant-box",
   "keywords": [
     "oclif"
   ],
   "license": "MIT",
   "main": "lib/index.js",
   "oclif": {
-    "bin": "vagrant-box"
+    "commands": "./lib/commands",
+    "bin": "vagrant-box",
+    "plugins": [
+      "@oclif/plugin-help"
+    ]
   },
+  "repository": "andrewgrewell/vagrant-box",
   "scripts": {
+    "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc",
-    "prepack": "rm -rf lib && tsc -b && oclif-dev readme",
+    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
     "test": "echo NO TESTS",
     "version": "oclif-dev readme && git add README.md"
   },
