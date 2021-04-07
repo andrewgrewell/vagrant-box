@@ -1,6 +1,6 @@
 {
   "name": "vagrant-box",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "An NPM package that makes it easy to add a vagrant dev box to a project",
   "main": "index.js",
   "scripts": {
