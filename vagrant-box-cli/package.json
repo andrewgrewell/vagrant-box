@@ -43,7 +43,10 @@
     "bin": "vagrant-box",
     "plugins": [
       "@oclif/plugin-help"
-    ]
+    ],
+    "hooks": {
+      "init": "./src/hooks/init"
+    }
   },
   "repository": "andrewgrewell/vagrant-box",
   "scripts": {

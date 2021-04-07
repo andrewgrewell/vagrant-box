@@ -11,6 +11,7 @@
 
 - name: Allow insecure registry connections
   become: true
+  when: workspace.docker.local_registry.enabled
   shell: |
     mkdir /etc/docker
     touch /etc/docker/daemon.json
@@ -22,6 +23,7 @@
   when: check_docker.stdout == "false"
 
 - name: Restart daemon
+  when: workspace.docker.local_registry.enabled
   command: service docker restart
   
 - name: Add vagrant user to docker group
@@ -30,6 +32,7 @@
     group: docker
 
 - name: Check if registry is running
+  when: workspace.docker.local_registry.enabled
   shell: docker ps -f name=registry | grep registry
   register: registry_running
   failed_when: registry_running.stderr != ""
@@ -37,9 +40,12 @@
   
 - name: Start local docker registry
   shell: docker run -d -p 5000:5000 --restart=always --name registry registry:2
-  when: registry_running.stdout == ""
+  when:
+    - registry_running.stdout == ""
+    - workspace.docker.local_registry.enabled
 
 - name: Login to registry
+  when: workspace.docker.local_registry.enabled
   expect:
     command: "docker login {{ workspace.ip }}:5000"
     responses:

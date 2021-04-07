@@ -1,5 +1,5 @@
 import { flags } from '@oclif/command';
-import VagrantCommand from '../vagrant_command';
+import VagrantCommand from '../classes/vagrant_command';
 
 export default class Provision extends VagrantCommand {
     static description = 'Provision the vagrant box'

@@ -14,7 +14,21 @@ end
 
 default_values = YAML.load_file(File.join(File.dirname(__FILE__), 'values.yml'))
 values_override = YAML.load_file(File.join(File.dirname(__FILE__), 'values.override.yml'))
+
 values = deep_merge(default_values, values_override)
+
+# Load values from consumer project
+consumer_path = Dir.pwd
+consumer_default_values = YAML.load_file(File.join(consumer_path, 'values.yml'))
+consumer_values_override = YAML.load_file(File.join(consumer_path, 'values.override.yml'))
+
+# Merge consumer values into base values
+if consumer_default_values
+    values = deep_merge(values, consumer_default_values)
+end
+if consumer_values_override
+    values = deep_merge(values, consumer_values_override)
+end
 
 vm_values = values["vm"]
 workspace_values = values["workspace"]

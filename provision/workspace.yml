@@ -2,36 +2,37 @@
 - hosts:  "{{ node_name }}"
   become: false
   tasks:
-    - name: Log Debug
-      debug:
-        msg: "Running Provisioning for default"
-        
-#    - name: Install pexpect
-#      become: true
-#      apt:
-#        name: python3-pexpect
-#        state: present
-#        update_cache: yes
-#
-#    - name: Setup Java
-#      become: true
-#      import_tasks: tasks/java.yml
-#
-#    - name: Setup Docker
-#      become: true
-#      import_tasks: tasks/docker.yml
-#
-#    - name: Setup AWS CLI
-#      when: aws.enabled
-#      import_tasks: tasks/aws.yml
-#
-#    - name: Setup Nodejs
-#      import_tasks: tasks/nodejs.yml
-#
-#    - name: Setup Yarn
-#      become: true
-#      import_tasks: tasks/yarn.yml
-#
-#    - name: Setup Terraform
-#      become: true
-#      import_tasks: tasks/terraform.yml
+    - name: Install pexpect
+      become: true
+      apt:
+        name: python3-pexpect
+        state: present
+        update_cache: yes
+
+    - name: Setup Java
+      when: workspace.java.enabled
+      become: true
+      import_tasks: tasks/java.yml
+
+    - name: Setup Docker
+      when: workspace.docker.enabled
+      become: true
+      import_tasks: tasks/docker.yml
+
+    - name: Setup AWS CLI
+      when: workspace.aws.enabled
+      import_tasks: tasks/aws.yml
+
+    - name: Setup Nodejs
+      when: workspace.node.enabled
+      import_tasks: tasks/nodejs.yml
+
+    - name: Setup Yarn
+      when: workspace.yarn.enabled
+      become: true
+      import_tasks: tasks/yarn.yml
+
+    - name: Setup Terraform
+      when: workspace.terraform.enabled
+      become: true
+      import_tasks: tasks/terraform.yml
