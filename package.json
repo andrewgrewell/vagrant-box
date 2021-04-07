@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "vagrant-box": "./vagrant-box-cli/bin/run"
+    "vagrant-box": "./vagrant-box-cli/cli.js"
   },
   "repository": {
     "type": "git",

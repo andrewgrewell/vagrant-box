@@ -1,6 +1,6 @@
-# Release Environment
+# Vagrant Box
 
-A portable environment for deploying from your local machine
+A portable environment that can be added to any project
 
 ## Host Requirements
 ___
@@ -13,15 +13,3 @@ You will need to have the software listed below present on your system
 - VirtualBox ( Virtualizer )
 - Ansible ( Provision using YAML )
 
-### Environment
-Environment variable defaults are provided in `values.yml` and overwrote by `values.override.yml`.
-You will want to provide your env specific values in `values.override` as that file is not source controlled.
-
-## Quick Start
-Add the path to the streem monorepo to your `values.override` under `streem_monorepo_path`
-```shell
-scripts/bootstrap-host.sh
-vagrant up
-vagrant ssh workspace
-[run commands as you would on your local machine]
-```
