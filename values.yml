@@ -7,7 +7,7 @@ vm:
 workspace:
   ip: 192.168.50.10
   storage:
-    enabled: true
+    enabled: false
     disk_size: 100000
   playbooks: []
   synced_folders: []
@@ -28,8 +28,4 @@ workspace:
       secret_access_key: ''
       region: us-west-2
       output: json
-    profiles:
-      - user:
-          role_arn: ''
-      - dev:
-          role_arn: ''
+    profiles: []

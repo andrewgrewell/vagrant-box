@@ -12,15 +12,16 @@ def deep_merge(a, b)
     a.merge(b.to_h, &merger)
 end
 
-default_values = YAML.load_file(File.join(File.dirname(__FILE__), 'values.yml'))
-values_override = YAML.load_file(File.join(File.dirname(__FILE__), 'values.override.yml'))
-
-values = deep_merge(default_values, values_override)
+values = YAML.load_file(File.join(File.dirname(__FILE__), 'values.yml'))
 
 # Load values from consumer project
-consumer_path = Dir.pwd
-consumer_default_values = YAML.load_file(File.join(consumer_path, 'values.yml'))
-consumer_values_override = YAML.load_file(File.join(consumer_path, 'values.override.yml'))
+begin
+    consumer_path = Dir.pwd
+    consumer_default_values = YAML.load_file(File.join(consumer_path, 'values.yml'))
+    consumer_values_override = YAML.load_file(File.join(consumer_path, 'values.override.yml'))
+rescue =>
+ print "Error loading consumer values"
+end
 
 # Merge consumer values into base values
 if consumer_default_values
@@ -50,7 +51,8 @@ Vagrant.configure('2') do |config|
     config.vm.define workspace_name do |workspace|
         # loop over a mapping of folders we wish to sync into the box
         workspace_values["synced_folders"].each do |folder_config|
-          workspace.vm.synced_folder folder_config["src"], folder_config["dest"]
+          srcPath = File.absolute_path(folder_config["src"])
+          workspace.vm.synced_folder srcPath, folder_config["dest"]
         end
         workspace.vm.box = vm_values["image"]
         workspace.vm.network 'private_network', ip: workspace_ip
@@ -84,7 +86,7 @@ Vagrant.configure('2') do |config|
         workspace_values["playbooks"].each do |provisioner_config|
           workspace.vm.provision provisioner_config["name"], type: 'ansible' do |ansible|
               ansible.compatibility_mode = "2.0"
-              ansible.playbook = provisioner_config["playbook"]
+              ansible.playbook = File.join(consumer_path, provisioner_config["playbook"])
               extra_vars = {
                   ansible_python_interpreter: '/usr/bin/python3',
                   node_name: workspace_name,
