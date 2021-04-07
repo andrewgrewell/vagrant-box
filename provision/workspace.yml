@@ -1,0 +1,33 @@
+---
+- hosts:  "{{ node_name }}"
+  become: false
+  tasks:
+#    - name: Install pexpect
+#      become: true
+#      apt:
+#        name: python3-pexpect
+#        state: present
+#        update_cache: yes
+#
+#    - name: Setup Java
+#      become: true
+#      import_tasks: tasks/java.yml
+#
+#    - name: Setup Docker
+#      become: true
+#      import_tasks: tasks/docker.yml
+
+    - name: Setup AWS CLI
+      when: aws.enabled
+      import_tasks: tasks/aws.yml
+
+#    - name: Setup Nodejs
+#      import_tasks: tasks/nodejs.yml
+#
+#    - name: Setup Yarn
+#      become: true
+#      import_tasks: tasks/yarn.yml
+#
+#    - name: Setup Terraform
+#      become: true
+#      import_tasks: tasks/terraform.yml

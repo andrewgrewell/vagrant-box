@@ -1,0 +1,23 @@
+{
+  "name": "vagrant-box",
+  "version": "1.0.0",
+  "description": "An NPM package that makes it easy to add a vagrant dev box to a project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "vagrant-box": "./vagrant-box-cli/bin/run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewgrewell/vagrant-box.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrewgrewell/vagrant-box/issues"
+  },
+  "homepage": "https://github.com/andrewgrewell/vagrant-box#readme"
+}

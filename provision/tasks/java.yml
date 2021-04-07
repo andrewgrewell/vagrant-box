@@ -1,0 +1,8 @@
+---
+- name: Install openjdk
+  become: true
+  shell: |
+    wget https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.10%2B9/OpenJDK11U-jdk_x64_linux_hotspot_11.0.10_9.tar.gz -O /tmp/jdk.tar.gz
+    sudo mkdir /usr/lib/jvm
+    sudo tar xfvz /tmp/jdk.tar.gz --directory /usr/lib/jvm
+    rm -f /tmp/jdk.tar.gz

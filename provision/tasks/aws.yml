@@ -1,0 +1,37 @@
+---
+- name: Install AWS CLI
+  become: true
+  apt:
+    name: awscli
+    update_cache: yes
+    
+- name: Ensures vagrant .aws dir exists
+  file: path=/vagrant/.aws state=directory
+  
+- name: Ensures root .aws dir exists
+  become: true
+  file: path=/root/.aws state=directory
+
+- name: Create aws credentials
+  shell: |
+    aws configure set aws_access_key_id {{ aws.default.access_key_id }}
+    aws configure set aws_secret_access_key {{ aws.default.secret_access_key }}
+  
+- name: Create aws default config
+  shell: |
+    aws configure set default.region {{ aws.default.region }}
+    aws configure set default.output {{ aws.default.output }}
+    
+- name: Create aws config
+  shell: |
+    aws configure set source_profile default --profile {{ item.key }}
+    aws configure set role_arn {{ item.value.role_arn }}
+  with_items: {{ aws.profiles }}
+  
+- name: Copy .aws to root
+  become: true
+  copy:
+    remote_src: true
+    src: /vagrant/.aws
+    dest: ~/.aws
+    

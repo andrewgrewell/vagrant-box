@@ -1,0 +1,17 @@
+---
+- name: Add an apt signing key for HashiCorp
+  apt_key:
+    url: https://apt.releases.hashicorp.com/gpg
+    state: present
+    
+- name: Adding apt repository for HashiCrop
+  shell: sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+
+- name: Install HashiCrop binaries
+  apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes
+  vars:
+    packages:
+      - terraform

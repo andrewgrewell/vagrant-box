@@ -1,0 +1,35 @@
+
+vm:
+  image: bento/ubuntu-16.04
+  cpus: 2
+  memory: 16384
+
+workspace:
+  ip: 192.168.50.10
+  storage:
+    enabled: true
+    disk_size: 100000
+  playbooks: []
+  synced_folders: []
+  docker:
+    enabled: false
+    local_registry:
+      enabled: false
+  java:
+    enabled: false
+  node:
+    enabled: false
+  yarn:
+    enabled: false
+  aws:
+    enabled: false
+    default:
+      access_key_id: ''
+      secret_access_key: ''
+      region: us-west-2
+      output: json
+    profiles:
+      - user:
+          role_arn: ''
+      - dev:
+          role_arn: ''

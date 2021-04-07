@@ -1,0 +1,47 @@
+---
+- name: Check docker exists
+  register: check_docker
+  changed_when: false
+  shell: |
+    if [ -x "$(command -v docker)" ]; then
+        echo "true"
+    else
+        echo "false"
+    fi
+
+- name: Allow insecure registry connections
+  become: true
+  shell: |
+    mkdir /etc/docker
+    touch /etc/docker/daemon.json
+    json='{ "insecure-registries": [ "{{ workspace.ip }}:5000" ] }'
+    echo $json > /etc/docker/daemon.json
+  
+- name: Install docker
+  shell: curl -sSL https://get.docker.com/ | sh
+  when: check_docker.stdout == "false"
+
+- name: Restart daemon
+  command: service docker restart
+  
+- name: Add vagrant user to docker group
+  user:
+    name: vagrant
+    group: docker
+
+- name: Check if registry is running
+  shell: docker ps -f name=registry | grep registry
+  register: registry_running
+  failed_when: registry_running.stderr != ""
+  changed_when: false
+  
+- name: Start local docker registry
+  shell: docker run -d -p 5000:5000 --restart=always --name registry registry:2
+  when: registry_running.stdout == ""
+
+- name: Login to registry
+  expect:
+    command: "docker login {{ workspace.ip }}:5000"
+    responses:
+      (?i)username: "admin"
+      (?i)password: "admin"
