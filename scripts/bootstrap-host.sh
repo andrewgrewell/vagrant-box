@@ -39,7 +39,7 @@ CASKS=(
 
 for cask in "${CASKS[@]}"
 do
-  brew list "$cask" || brew install --cask "$cask"
+  brew install --cask "$cask"
 done
 
 
@@ -50,7 +50,7 @@ FORMULAS=(
 
 for formula in "${FORMULAS[@]}"
 do
-  brew list "$formula" || brew install "$formula"
+  brew install "$formula"
 done
 
 logStep "Installing Vagrant plugins"

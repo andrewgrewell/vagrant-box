@@ -15,12 +15,13 @@ end
 values = YAML.load_file(File.join(File.dirname(__FILE__), 'values.yml'))
 
 # Load values from consumer project
+consumer_path = Dir.pwd
+consumer_default_values = YAML.load_file(File.join(consumer_path, 'values.yml'))
+consumer_values_override = nil
 begin
-    consumer_path = Dir.pwd
-    consumer_default_values = YAML.load_file(File.join(consumer_path, 'values.yml'))
     consumer_values_override = YAML.load_file(File.join(consumer_path, 'values.override.yml'))
-rescue =>
- print "Error loading consumer values"
+rescue
+    # Error is fine
 end
 
 # Merge consumer values into base values
