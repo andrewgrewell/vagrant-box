@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 
 const consumerRootPath = process.cwd();
-const rootPath = path.resolve(__dirname);
+const rootPath = path.resolve(__dirname, '../');
 
 const valuesPath = path.resolve(rootPath, './values.yml');
 const customerValuesPath = path.resolve(consumerRootPath, './values.yml');
@@ -16,7 +16,7 @@ if (!fs.existsSync(customerValuesPath)) {
     console.log('Created values.yml');
 }
 
-if (!s.existsSync(customerValuesPath)) {
+if (!fs.existsSync(consumerExamplePath)) {
     spawn('cp', [examplePath, consumerExamplePath])
     console.log('Created example provision play');
 }
