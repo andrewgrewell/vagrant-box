@@ -1,6 +1,6 @@
 {
   "name": "vagrant-box",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "An NPM package that makes it easy to add a vagrant dev box to a project",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,8 @@
   },
   "bin": {
     "vagrant-box": "scripts/cli.js",
-    "vagrant-box-bootstrap": "scripts/bootstrap-host.sh"
+    "vagrant-box-bootstrap": "scripts/bootstrap-host.sh",
+    "vagrant-box-init": "scripts/init.js"
   },
   "repository": {
     "type": "git",
