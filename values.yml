@@ -21,6 +21,8 @@ workspace:
     enabled: false
   yarn:
     enabled: false
+  terraform:
+    enabled: false
   aws:
     enabled: false
     default:
