@@ -1,0 +1,19 @@
+---
+- name: Pull ngrok docker image
+  command: docker pull wernight/ngrok
+
+- name: Start ngrok container
+  command: docker run -d --rm -it -p 4040 --network="host" --env NGROK_AUTH={{ workspace.ngrok.auth_token }} --env NGROK_HOSTNAME=*.andrew-local.streem.cloud wernight/ngrok ngrok http 3000
+  register: ngrok_output
+
+- name: Get ngrok public URL
+  shell: |
+    curl --silent --show-error localhost:4040/api/tunnels | sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p'
+  register: ngrok_url
+  retries: 10
+  delay: 2
+  until: ngrok_url.rc == 0
+  
+- name: Print ngrok url
+  debug:
+    msg: "Ngrok public url: {{ ngrok_url.stdout }}"

@@ -41,8 +41,8 @@
 - name: Start local docker registry
   shell: docker run -d -p 5000:5000 --restart=always --name registry registry:2
   when:
+    - workspace.docker.local_registry.enabled == true
     - registry_running.stdout == ""
-    - workspace.docker.local_registry.enabled
 
 - name: Login to registry
   when: workspace.docker.local_registry.enabled

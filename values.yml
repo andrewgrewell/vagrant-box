@@ -11,6 +11,9 @@ workspace:
     disk_size: 100000
   playbooks: []
   synced_folders: []
+  ngrok:
+    enabled: false
+    auth_token: ""
   docker:
     enabled: false
     local_registry:

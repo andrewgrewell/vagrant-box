@@ -36,3 +36,8 @@
       when: workspace.terraform.enabled
       become: true
       import_tasks: tasks/terraform.yml
+      
+    - name: Setup Ngrok
+      when: workspace.ngrok.enabled
+      become: true
+      import_tasks: tasks/ngrok.yml
