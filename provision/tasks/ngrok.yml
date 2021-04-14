@@ -3,7 +3,13 @@
   command: docker pull wernight/ngrok
 
 - name: Start ngrok container
-  command: docker run -d --rm -it -p 4040 --network="host" --env NGROK_AUTH={{ workspace.ngrok.auth_token }} --env NGROK_HOSTNAME=*.andrew-local.streem.cloud wernight/ngrok ngrok http 3000
+  shell: docker run -d /
+                    --rm /
+                    -it /
+                    -p 4040 /
+                    --network="host" /
+                    --env NGROK_AUTH={{ workspace.ngrok.auth_token }} /
+                    wernight/ngrok ngrok http {{ workspace.ngrok.taget_port }}
   register: ngrok_output
 
 - name: Get ngrok public URL

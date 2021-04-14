@@ -8,7 +8,7 @@
         name: python3-pexpect
         state: present
         update_cache: yes
-
+    
     - name: Setup Java
       when: workspace.java.enabled
       become: true
@@ -41,3 +41,8 @@
       when: workspace.ngrok.enabled
       become: true
       import_tasks: tasks/ngrok.yml
+      
+    - name: Setup Go
+      when: workspace.go.enabled
+      become: true
+      import_tasks: tasks/go.yml
