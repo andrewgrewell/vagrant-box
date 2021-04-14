@@ -1,42 +1,41 @@
 ---
-- hosts:  "{{ node_name }}"
-  tasks:
-    - name: check if go already added
-      stat:
-        path: /usr/local/go
-      register: godir
-      
-    - name: Add vagrant to godev group
-      shell: |
-        groupadd godev
-        usermod -a -G godev vagrant
+- name: check if go already added
+  stat:
+    path: /usr/local/go
+  register: godir
 
-    - name: Unarchive Golang into /usr/local
-      when: godir.stat.exists == false
-      unarchive:
-        src: https://golang.org/dl/go1.16.3.linux-amd64.tar.gz
-        dest: /usr/local/
-        remote_src: yes
-        group: godev
-      
-    - name: Add go to profile
-      lineinfile:
-        path: ~/.profile
-        regexp: '^export PATH="$PATH:/usr/local/go/bin"'
-        line: export PATH="$PATH:/usr/local/go/bin"
+- name: Add vagrant to godev group
+  shell: |
+    groupadd godev
+    usermod -a -G godev vagrant
 
-    - name: Add go to system profile
-      lineinfile:
-        path: /etc/profile
-        regexp: '^export PATH="$PATH:/usr/local/go/bin"'
-        line: export PATH="$PATH:/usr/local/go/bin"
-        
-    - name: Get go version
-      become_user: vagrant
-      shell: . ~/.profile go version
-      register: goversion
-      
-    - name: Print go version
-      debug:
-        msg: "Go Version: {{ goversion.stdout }}"
+- name: Unarchive Golang into /usr/local
+  when: godir.stat.exists == false
+  unarchive:
+    src: https://golang.org/dl/go1.16.3.linux-amd64.tar.gz
+    dest: /usr/local/
+    remote_src: yes
+    group: godev
+
+- name: Add go to profile
+  lineinfile:
+    path: ~/.profile
+    regexp: '^export PATH="$PATH:/usr/local/go/bin"'
+    line: export PATH="$PATH:/usr/local/go/bin"
+
+- name: Add go to system profile
+  lineinfile:
+    path: /etc/profile
+    regexp: '^export PATH="$PATH:/usr/local/go/bin"'
+    line: export PATH="$PATH:/usr/local/go/bin"
+
+- name: Get go version
+  become_user: vagrant
+  shell: . ~/.profile go version
+  register: goversion
+
+- name: Print go version
+  debug:
+    msg: "Go Version: {{ goversion.stdout }}"
+
       
