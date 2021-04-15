@@ -18,7 +18,6 @@ workspace:
     auth_token: ""
     target_port: 3000
   docker:
-    enabled: false
     local_registry:
       enabled: false
   java:

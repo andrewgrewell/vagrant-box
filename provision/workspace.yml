@@ -8,16 +8,19 @@
         name: python3-pexpect
         state: present
         update_cache: yes
-    
+        
+    - name: Setup jq
+      become: true
+      import_tasks: tasks/jq.yml
+
+    - name: Setup Docker
+      become: true
+      import_tasks: tasks/docker.yml
+      
     - name: Setup Java
       when: workspace.java.enabled
       become: true
       import_tasks: tasks/java.yml
-
-    - name: Setup Docker
-      when: workspace.docker.enabled
-      become: true
-      import_tasks: tasks/docker.yml
 
     - name: Setup AWS CLI
       when: workspace.aws.enabled
