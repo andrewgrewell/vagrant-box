@@ -12,6 +12,10 @@
     - name: Setup jq
       become: true
       import_tasks: tasks/jq.yml
+      
+    - name: Setup pip
+      become: true
+      import_tasks: tasks/pip.yml
 
     - name: Setup Docker
       become: true
