@@ -1,10 +1,14 @@
 ---
 - name: Install AWS CLI
   become: true
-  apt:
+  pip:
     name: awscli
-    update_cache: yes
-    
+  
+- name: Install aws-mfa
+  become: true
+  pip:
+    name: aws-mfa
+  
 - name: Ensures vagrant .aws dir exists
   file: path=~/.aws state=directory
 
@@ -23,4 +27,3 @@
     aws configure set source_profile default --profile {{ item.name }}
     aws configure set role_arn {{ item.role_arn }}
   loop: "{{ workspace.aws.profiles }}"
-    
