@@ -16,6 +16,9 @@
   shell: |
     aws configure set aws_access_key_id {{ workspace.aws.default.access_key_id }}
     aws configure set aws_secret_access_key {{ workspace.aws.default.secret_access_key }}
+    
+    aws configure set aws_access_key_id {{ workspace.aws.default.access_key_id }} --profile default-long-term
+    aws configure set aws_secret_access_key {{ workspace.aws.default.secret_access_key }} --profile default-long-term
   
 - name: Create aws default config
   shell: |
