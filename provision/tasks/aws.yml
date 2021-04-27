@@ -28,5 +28,5 @@
 - name: Create aws config
   shell: |
     aws configure set source_profile default --profile {{ item.name }}
-    aws configure set role_arn {{ item.role_arn }}
+    aws configure set role_arn {{ item.role_arn }} --profile {{ item.name }}
   loop: "{{ workspace.aws.profiles }}"
