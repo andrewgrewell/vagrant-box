@@ -18,7 +18,7 @@
     dest: /opt/nodejs/
     remote_src: yes
   when: nodejs.stat.exists == false
-    
+  
 - name: Remove nodejs tarball
   file:
     path: node-v12.18.3-linux-x64.tar.gz
@@ -37,7 +37,7 @@
     - link_result.rc > 0
     - "'File exists' not in link_result.stderr"
   changed_when: link_result.rc == 0
-    
+  
 - name: Get node version
   shell: node --version
   register: node_version
@@ -45,3 +45,7 @@
 - name: Print node version
   debug:
     msg: "Nodejs Version: {{ node_version.stdout }}"
+  
+- name: Install NVM
+  become_user: vagrant
+  shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
