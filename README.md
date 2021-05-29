@@ -13,6 +13,10 @@ You will need to have the software listed below present on your system
 - VirtualBox ( Virtualizer )
 - Ansible ( Provision using YAML )
 
+**Running on Window**
+Sorry but you will need to manually install the dependencies for the time being.
+You will also need to install the `vagrant-guest_ansible` plugin
+
 ## Usage
 1. Install
 ```sh

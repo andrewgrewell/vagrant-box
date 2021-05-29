@@ -44,6 +44,8 @@ Vagrant.configure('2') do |config|
         v.cpus = vm_values["cpus"]
     end
 
+    ansible_provisioner = Vagrant::Util::Platform.windows? ? :guest_ansible : :ansible
+
     ## Workspace
     workspace_name = "workspace"
     workspace_ip = workspace_values["ip"]
@@ -73,7 +75,7 @@ Vagrant.configure('2') do |config|
         end
 
         # Run basic provisioning
-        workspace.vm.provision "workspace", type: 'ansible' do |ansible|
+        workspace.vm.provision "workspace", type: ansible_provisioner do |ansible|
             ansible.compatibility_mode = "2.0"
             ansible.playbook = 'provision/workspace.yml'
             ansible.extra_vars = {
@@ -90,7 +92,7 @@ Vagrant.configure('2') do |config|
 
         # Loop over ansible provisioners that have been configured by the consuming project
         workspace_values["playbooks"].each do |provisioner_config|
-          workspace.vm.provision provisioner_config["name"], type: 'ansible', run: provisioner_config["run"] || 'always'  do |ansible|
+          workspace.vm.provision provisioner_config["name"], type: ansible_provisioner, run: provisioner_config["run"] || 'always'  do |ansible|
               ansible.compatibility_mode = "2.0"
               ansible.playbook = File.join(consumer_path, provisioner_config["playbook"])
               extra_vars = {
