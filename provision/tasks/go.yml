@@ -24,7 +24,7 @@
     - /home/vagrant/.zprofile
     - /home/vagrant/.zshrc
   lineinfile:
-    path: {{ item }}
+    path: "{{ item }}"
     regexp: '^export PATH="$PATH:/usr/local/go/bin"'
     line: export PATH="$PATH:/usr/local/go/bin"
 
