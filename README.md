@@ -17,6 +17,8 @@ You will need to have the software listed below present on your system
 Sorry but you will need to manually install the dependencies for the time being.
 You will also need to install the `vagrant-guest_ansible` plugin
 
+There are also quite a few gotchas with running in WSL which I will document when I have time
+
 ## Usage
 1. Install
 ```sh

@@ -38,6 +38,7 @@ workspace_values = values["workspace"]
 Vagrant.configure('2') do |config|
     # Shared Config
     config.ssh.insert_key = false
+    config.ssh.password = "vagrant"
     config.vm.provider 'virtualbox' do |v|
         v.gui = vm_values["gui"]
         v.memory = vm_values["memory"]
@@ -79,6 +80,9 @@ Vagrant.configure('2') do |config|
             ansible.compatibility_mode = "2.0"
             ansible.playbook = 'provision/workspace.yml'
             ansible.extra_vars = {
+                ansible_connection: 'ssh',
+                ansible_user: 'vagrant',
+                ansible_ssh_pass: 'vagrant',
                 ansible_python_interpreter: '/usr/bin/python3',
                 node_name: workspace_name,
                 storage_mountpoint: storage_mountpoint
@@ -96,6 +100,9 @@ Vagrant.configure('2') do |config|
               ansible.compatibility_mode = "2.0"
               ansible.playbook = File.join(consumer_path, provisioner_config["playbook"])
               extra_vars = {
+                  ansible_connection: 'ssh',
+                  ansible_user: 'vagrant',
+                  ansible_ssh_pass: 'vagrant',
                   ansible_python_interpreter: '/usr/bin/python3',
                   node_name: workspace_name,
                   storage_mountpoint: storage_mountpoint
