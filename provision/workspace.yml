@@ -23,7 +23,7 @@
       import_tasks: tasks/pip.yml
 
     - name: Setup pup
-      become: ture
+      become: true
       import_tasks: tasks/pup.yml
 
     - name: Setup Docker

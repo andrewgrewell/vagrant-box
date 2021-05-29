@@ -18,12 +18,14 @@
     group: godev
 
 - name: Add go to profile
+  become: false
   lineinfile:
     path: ~/.profile
     regexp: '^export PATH="$PATH:/usr/local/go/bin"'
     line: export PATH="$PATH:/usr/local/go/bin"
 
 - name: Add go to system profile
+  become: false
   lineinfile:
     path: /etc/profile
     regexp: '^export PATH="$PATH:/usr/local/go/bin"'
