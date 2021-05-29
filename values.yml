@@ -1,8 +1,9 @@
 
 vm:
   image: bento/ubuntu-16.04
+  gui: false
   cpus: 2
-  memory: 16384
+  memory: 8192
 
 workspace:
   ip: 192.168.50.10

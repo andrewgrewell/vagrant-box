@@ -39,9 +39,9 @@ Vagrant.configure('2') do |config|
     # Shared Config
     config.ssh.insert_key = false
     config.vm.provider 'virtualbox' do |v|
+        v.gui = vm_values["gui"]
         v.memory = vm_values["memory"]
         v.cpus = vm_values["cpus"]
-
     end
 
     ## Workspace
@@ -83,7 +83,12 @@ Vagrant.configure('2') do |config|
             }.merge(values)
         end
 
-        # Loop over provisioners that have been configured by the consuming project
+        # Run a single shell provisioner
+        if workspace_values["shell"]
+          workspace.vm.provision "shell", inline: workspace_values["shell"]
+        end
+
+        # Loop over ansible provisioners that have been configured by the consuming project
         workspace_values["playbooks"].each do |provisioner_config|
           workspace.vm.provision provisioner_config["name"], type: 'ansible', run: provisioner_config["run"] || 'always'  do |ansible|
               ansible.compatibility_mode = "2.0"
