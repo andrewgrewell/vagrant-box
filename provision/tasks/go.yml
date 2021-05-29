@@ -17,15 +17,24 @@
     remote_src: yes
     group: godev
 
-- name: Add go to profile
-  become: false
+- name: Add go to profiles
+  loop:
+    - /home/vagrant/.profile
+    - /home/vagrant/.bashrc
+    - /home/vagrant/.zprofile
+    - /home/vagrant/.zshrc
+  lineinfile:
+    path: {{ item }}
+    regexp: '^export PATH="$PATH:/usr/local/go/bin"'
+    line: export PATH="$PATH:/usr/local/go/bin"
+
+- name: Add go to
   lineinfile:
     path: ~/.profile
     regexp: '^export PATH="$PATH:/usr/local/go/bin"'
     line: export PATH="$PATH:/usr/local/go/bin"
 
 - name: Add go to system profile
-  become: false
   lineinfile:
     path: /etc/profile
     regexp: '^export PATH="$PATH:/usr/local/go/bin"'
@@ -33,7 +42,9 @@
 
 - name: Get go version
   become_user: vagrant
-  shell: . ~/.profile go version
+  shell: |
+    . /home/vagrant/.profile
+    go version
   register: goversion
 
 - name: Print go version
