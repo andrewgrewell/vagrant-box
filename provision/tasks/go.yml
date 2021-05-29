@@ -21,7 +21,6 @@
   loop:
     - /home/vagrant/.profile
     - /home/vagrant/.bashrc
-    - /home/vagrant/.zprofile
     - /home/vagrant/.zshrc
   lineinfile:
     path: "{{ item }}"
