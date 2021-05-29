@@ -14,14 +14,14 @@
 - name: Get nodejs tarball
   become: true
   unarchive:
-    src: https://nodejs.org/dist/v12.18.3/node-v12.18.3-linux-x64.tar.gz
+    src: https://nodejs.org/dist/v14.17.0/node-v14.17.0-linux-x64.tar.gz
     dest: /opt/nodejs/
     remote_src: yes
   when: nodejs.stat.exists == false
   
 - name: Remove nodejs tarball
   file:
-    path: node-v12.18.3-linux-x64.tar.gz
+    path: node-v14.17.0-linux-x64.tar.gz
     state: absent
   when: nodejs.stat.exists == false
 
@@ -30,7 +30,7 @@
   register: link_result
   shell: |
     cd /opt/nodejs
-    mv node-v12.18.3-linux-x64 12.18.3
+    mv node-v14.17.0-linux-x64 14.17.0
     ln -s 12.18.3 current
     ln -s /opt/nodejs/current/bin/node /bin/node
   failed_when:

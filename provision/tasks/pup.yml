@@ -1,0 +1,3 @@
+---
+- name: Install pup
+  command: go get github.com/ericchiang/pup

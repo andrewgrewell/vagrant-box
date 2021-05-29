@@ -8,7 +8,12 @@
         name: python3-pexpect
         state: present
         update_cache: yes
-        
+
+    - name: Setup Go
+      when: workspace.go.enabled
+      become: true
+      import_tasks: tasks/go.yml
+
     - name: Setup jq
       become: true
       import_tasks: tasks/jq.yml
@@ -16,6 +21,10 @@
     - name: Setup pip
       become: true
       import_tasks: tasks/pip.yml
+
+    - name: Setup pup
+      become: ture
+      import_tasks: tasks/pup.yml
 
     - name: Setup Docker
       become: true
@@ -48,8 +57,3 @@
       when: workspace.ngrok.enabled
       become: true
       import_tasks: tasks/ngrok.yml
-      
-    - name: Setup Go
-      when: workspace.go.enabled
-      become: true
-      import_tasks: tasks/go.yml
